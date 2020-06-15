@@ -1,8 +1,12 @@
 package com.rory.test;
 
+import com.rory.dao.IAccountDao;
 import com.rory.dao.IUserDao;
+import com.rory.domain.Account;
+import com.rory.domain.AccountUser;
 import com.rory.domain.QueryVo;
 import com.rory.domain.User;
+import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,7 +15,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.print.PageFormat;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +25,7 @@ public class UserDaoTest{
     private InputStream in;
     private SqlSession sqlSession;
     private IUserDao userDao = null;
+    private IAccountDao accountDao = null;
 
     @Before
     public void init() throws Exception{
@@ -31,6 +38,8 @@ public class UserDaoTest{
         sqlSession = factory.openSession();
 
         userDao = sqlSession.getMapper(IUserDao.class);
+
+        accountDao = sqlSession.getMapper(IAccountDao.class);
     }
 
     @After
@@ -47,6 +56,7 @@ public class UserDaoTest{
 
         for(User user : users){
             System.out.println(user);
+            System.out.println(user.getAccounts());
         }
     }
 
@@ -107,6 +117,51 @@ public class UserDaoTest{
         List<User> users = userDao.findUserByVo(queryVo);
         for (User u : users){
             System.out.println(u);
+        }
+    }
+
+    @Test
+    public void testFindCondition() {
+        User user = new User();
+        user.setUsername("老王");
+        List<User> users = userDao.findUserByCondition(user);
+        for(User u : users){
+            System.out.println(u);
+        }
+    }
+
+    @Test
+    public void testFindByIds() {
+        QueryVo queryVo = new QueryVo();
+
+        List ids = new ArrayList();
+        ids.add(1);
+        ids.add(3);
+        queryVo.setIds(ids);
+
+        List<User> users = userDao.findUserByIds(queryVo);
+        for(User u : users){
+            System.out.println(u);
+        }
+    }
+
+    @Test
+    public void tesFindAccount() {
+        List<Account> accounts = accountDao.findAll();
+        for(Account account : accounts) {
+            System.out.println(account);
+            System.out.println(account.getUser());
+        }
+    }
+
+    /**
+     * 测试查询所有账户，同时包含用户名和地址
+     */
+    @Test
+    public void testFindAll() {
+        List<AccountUser> accountUsers = accountDao.findAllUserAccount();
+        for(AccountUser accountuser : accountUsers) {
+            System.out.println(accountuser);
         }
     }
 }

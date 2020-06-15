@@ -13,6 +13,11 @@
     
     <environments default="development">
         <environment id="development">
+            <!--
+            POOLED: 采用传统的javax.sql.DataSource规范中的连接池，mybatis中针对规范的实现
+            UNPOOLED 采用传统的获取连接的方式
+            JNDI 采用服务器提供的JNDI技术实现（如果不是web或者maven的war工程是不能使用的）
+            -->
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="${jdbc.driver}"/>

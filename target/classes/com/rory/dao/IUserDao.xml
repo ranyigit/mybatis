@@ -3,8 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rory.dao.IUserDao">
-    <select id="findAll" resultType="com.rory.domain.User">
-        select * from user;
+    
+    <!--定义user的resultMap 一对多-->
+    <resultMap id="userAccountMap" type="user">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="sex" column="sex"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="address" column="address"></result>
+        <!-- 配置user对象中accounts集合的映射 -->
+        <collection property="accounts" ofType="account">
+            <id column="aid" property="id"></id>
+            <result column="uid" property="uid"></result>
+            <result column="money" property="money"></result>
+        </collection>
+    </resultMap>
+    
+    <select id="findAll" resultMap="userAccountMap">
+        select * from user u left outer join account a on u.id = a.uid;
     </select>
 
     <insert id="saveUser" parameterType="User">
@@ -39,4 +55,42 @@
         select * from user where username like #{user.username}
     </select>
 
+    <sql id="sel_user">
+        select * from user
+    </sql>
+    <!--根据条件查询-->
+    <!--<select id="findUserByCondition" resultType="user" parameterType="user">
+        select * from user where 1=1
+        <if test="username != null">
+            and username = #{username}
+        </if>
+
+        <if test="sex != null">
+            and sex = #{sex}
+        </if>
+    </select>-->
+    <select id="findUserByCondition" resultType="user" parameterType="user">
+        <include refid="sel_user"/>
+        <where>
+            <if test="username != null">
+                and username = #{username}
+            </if>
+
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+        </where>
+    </select>
+
+    <!--根据query vo的Id集合实现查询用户列表-->
+    <select id="findUserByIds" resultType="user" parameterType="com.rory.domain.QueryVo">
+        <include refid="sel_user"/>
+        <where>
+            <if test="ids != null and ids.size() > 0">
+                <foreach collection="ids" open="and id in (" close=")" item="uid" separator=",">
+                    #{uid}
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>

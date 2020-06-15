@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IUserDao {
     /**
-     * 查询所有
+     * 查询所有，同时获取到用户下所有账户的信息
      * @return
      */
     List<User> findAll();
@@ -56,4 +56,17 @@ public interface IUserDao {
      * @return
      */
     List<User> findUserByVo(QueryVo queryVo);
+
+    /**
+     * 根据传入参数条件查询
+     * @return
+     */
+    List<User> findUserByCondition(User user);
+
+    /**
+     * 根据queryvo中提供的id集合，查询用户信息
+     * @param vo
+     * @return
+     */
+    List<User> findUserByIds(QueryVo vo);
 }
