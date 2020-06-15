@@ -93,4 +93,25 @@
             </if>
         </where>
     </select>
+
+    <!--查询所有角色-->
+    <resultMap id="roleMap" type="user">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="sex" column="sex"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="address" column="address"></result>
+
+        <collection property="roles" ofType="role">
+            <id property="roleId" column="rid"></id>
+            <result property="roleName" column="role_name"></result>
+            <result property="roleDesc" column="role_desc"></result>
+        </collection>
+    </resultMap>
+
+    <select id="findAllRole" resultMap="roleMap">
+        select u.*,r.id as rid,r.role_name,r.role_desc from user u
+        left outer join user_role ur on u.id = ur.uid
+        left outer join role r on r.id = ur.rid;
+    </select>
 </mapper>

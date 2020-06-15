@@ -69,4 +69,10 @@ public interface IUserDao {
      * @return
      */
     List<User> findUserByIds(QueryVo vo);
+
+    /**
+     * 查询用户所有角色
+     * @return
+     */
+    List<User> findAllRole();
 }

@@ -10,8 +10,19 @@ public class User {
     private String sex;
     private String address;
 
-    //一对多关系映射
+    // 一对多关系映射
     private List<Account> accounts;
+
+    // 多对多 角色关系映射
+    private List<Role> roles;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     public List<Account> getAccounts() {
         return accounts;

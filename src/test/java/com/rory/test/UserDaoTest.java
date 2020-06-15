@@ -2,11 +2,7 @@ package com.rory.test;
 
 import com.rory.dao.IAccountDao;
 import com.rory.dao.IUserDao;
-import com.rory.domain.Account;
-import com.rory.domain.AccountUser;
-import com.rory.domain.QueryVo;
-import com.rory.domain.User;
-import org.apache.ibatis.annotations.ResultType;
+import com.rory.domain.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,7 +11,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.print.PageFormat;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -162,6 +157,17 @@ public class UserDaoTest{
         List<AccountUser> accountUsers = accountDao.findAllUserAccount();
         for(AccountUser accountuser : accountUsers) {
             System.out.println(accountuser);
+        }
+    }
+
+    @Test
+    public void testFindAllRole(){
+        List<User> users = userDao.findAllRole();
+        for (User user : users){
+            System.out.println(user);
+            System.out.println(user.getRoles());
+
+            System.out.println("-----------------");
         }
     }
 }
