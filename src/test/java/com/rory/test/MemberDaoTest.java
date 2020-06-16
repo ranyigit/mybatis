@@ -10,7 +10,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
 import java.io.InputStream;
 import java.util.List;
 
@@ -44,8 +43,8 @@ public class MemberDaoTest {
         List<Member> members = memberDao.findAll();
         for (Member member : members) {
             System.out.println(member);
-            //System.out.println(member.getMemberAccount());
-            //System.out.println(member.getComment());
+            System.out.println(member.getMemberAccount());
+            System.out.println(member.getComments());
         }
     }
 }

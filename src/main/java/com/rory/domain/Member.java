@@ -2,6 +2,7 @@ package com.rory.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Member implements Serializable {
     private Integer id;
@@ -13,22 +14,14 @@ public class Member implements Serializable {
 
     private MemberAccount memberAccount;
 
-    private Comment comment;
+    private List<Comment> comments;
 
-    public Date getCreatedTime() {
-        return createdTime;
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public Comment getComment() {
-        return comment;
-    }
-
-    public void setComment(Comment comment) {
-        this.comment = comment;
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public MemberAccount getMemberAccount() {
@@ -79,6 +72,14 @@ public class Member implements Serializable {
         this.address = address;
     }
 
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
     @Override
     public String toString() {
         return "Member{" +
@@ -87,7 +88,9 @@ public class Member implements Serializable {
                 ", password='" + password + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", address='" + address + '\'' +
-                ", created_time=" + createdTime +
+                ", createdTime=" + createdTime +
+                ", memberAccount=" + memberAccount +
+                ", comments=" + comments +
                 '}';
     }
 }
