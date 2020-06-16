@@ -2,6 +2,7 @@ package com.rory.dao;
 
 import com.rory.domain.Account;
 import com.rory.domain.AccountUser;
+import org.apache.ibatis.annotations.Results;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface IAccountDao {
 
     List<AccountUser> findAllUserAccount();
 
+    @Results()
+    List<Account> findOneByOne();
 }

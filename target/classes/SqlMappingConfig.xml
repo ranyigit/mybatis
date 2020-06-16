@@ -4,8 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-    
+
     <properties resource="jdbcConfig.properties"></properties>
+
+    <!-- 开启支持延迟加载 -->
+    <settings>
+        <!-- 二级缓存 -->
+        <setting name="cacheEnabled" value="true"/>
+        <!-- 延迟加载的全局开关 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
     
     <typeAliases>
         <package name="com.rory.domain"/>
@@ -32,4 +41,5 @@
         <!--<mapper resource="com/rory/dao/IUserDao.xml"></mapper>-->
         <package name="com.rory.dao"/>
     </mappers>
+
 </configuration>

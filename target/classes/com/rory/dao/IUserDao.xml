@@ -3,7 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rory.dao.IUserDao">
-    
+
+    <!-- 开启二级缓存 -->
+    <cache/>
+
     <!--定义user的resultMap 一对多-->
     <resultMap id="userAccountMap" type="user">
         <id property="id" column="id"></id>
@@ -19,7 +22,7 @@
         </collection>
     </resultMap>
     
-    <select id="findAll" resultMap="userAccountMap">
+    <select id="findAll" resultMap="userAccountMap" useCache="true">
         select * from user u left outer join account a on u.id = a.uid;
     </select>
 
@@ -44,6 +47,8 @@
     </select>
 
     <select id="findByName" parameterType="String" resultType="User">
+        -- 参数占位符
+        -- select * from user where username like '%${value}%'
         select * from user where username like #{username};
     </select>
 

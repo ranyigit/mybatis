@@ -18,6 +18,14 @@
         </association>
     </resultMap>
 
+    <!-- 一对一延迟加载查询 -->
+    <resultMap id="accountUMap" type="account">
+        <id property="id" column="aid"></id>
+        <result property="uid" column="uid"></result>
+        <result property="money" column="money"></result>
+        <association property="user" column="uid" javaType="user" select="com.rory.dao.IUserDao.findById"></association>
+    </resultMap>
+
     <select id="findAll" resultMap="accountUserMap">
         select a.id as aid,a.uid,a.money,u.* from account a,user u where u.id=a.uid;
     </select>
@@ -25,5 +33,9 @@
     <!--查询所欲账户同时包含用户名和地址信息-->
     <select id="findAllUserAccount" resultType="accountuser">
         select a.*,u.username,u.address from account a,user u where u.id=a.uid;
+    </select>
+
+    <select id="findOneByOne" resultMap="accountUMap">
+        select * from account;
     </select>
 </mapper>
